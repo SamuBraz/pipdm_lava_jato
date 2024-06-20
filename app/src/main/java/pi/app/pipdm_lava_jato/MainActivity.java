@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 
 import lava_jato.app.dao.Maindao;
+import lava_jato.app.model.HorarioVO;
 import lava_jato.app.model.UsuarioVO;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,16 +21,36 @@ public class MainActivity extends AppCompatActivity {
         Maindao maindao = new Maindao(this);
 
         UsuarioVO usuarioVO1 = new UsuarioVO();
-        usuarioVO1.setId(1);
+        usuarioVO1.setId(212222);
         usuarioVO1.setNome("Bruno");
         usuarioVO1.setSenha("21321321");
         usuarioVO1.setEmail("bb.silva@gmail.com");
         usuarioVO1.setTelefone("321231");
         usuarioVO1.setCpf("1321321");
 
+
+        HorarioVO horarioVO = new HorarioVO();
+        horarioVO.setIdHorario(6);
+        horarioVO.setIdClient(2);
+        horarioVO.setHorarioInicio("18-06-2024-22:00");
+        horarioVO.setHorarioTermino("18-06-2024-22:20");
+
         maindao.addClient(usuarioVO1);
+        maindao.addHorario(horarioVO);
 
         Log.d("insert: ", "Registros inseridos no banco de dados...");
 
     }
+
+    public void btnOnClickCadastrarHora(View view){
+        Maindao maindao = new Maindao(this);
+        HorarioVO horarioVO = new HorarioVO();
+        horarioVO.setIdHorario(1);
+        horarioVO.setIdClient(1);
+        horarioVO.setHorarioInicio("18-06-2024-22:00");
+        horarioVO.setHorarioTermino("18-06-2024-22:20");
+
+        maindao.addHorario(horarioVO);
+    }
+
 }
