@@ -51,6 +51,18 @@ public class MainActivity extends AppCompatActivity {
         horarioVO.setHorarioTermino("18-06-2024-22:20");
 
         maindao.addHorario(horarioVO);
+
     }
+
+    public void  btnOnClickGet(View view){
+        Maindao maindao = new Maindao(this);
+        UsuarioVO usuarioVO = maindao.getUsuario(1);
+
+        String nome = usuarioVO.getNome();
+        int id = usuarioVO.getId();
+        Log.d("TAG", "Valor da variável: " + nome);
+        Log.d("TAG", "Valor da variável: " + id);
+    }
+
 
 }

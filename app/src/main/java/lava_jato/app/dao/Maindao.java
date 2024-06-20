@@ -2,6 +2,7 @@ package lava_jato.app.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
@@ -97,5 +98,26 @@ public class Maindao extends SQLiteOpenHelper {
 
         db.insert(TB_HORARIO, null, contentValues);
     }
+
+    public UsuarioVO getUsuario(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from " + TB_USUARIO, null);
+        Cursor cursor = db.query(TB_USUARIO, new String[] {KEY_ID, NOME},
+                KEY_ID + " = ? ",
+                new String[] {String.valueOf(id)},
+                null, null, null);
+        if (cursor != null){
+            cursor.moveToFirst();
+        }
+
+        UsuarioVO usuarioVO = new UsuarioVO();
+        usuarioVO.setId( Integer.parseInt(cursor.getString(0)));
+        usuarioVO.setNome(cursor.getString(1));
+        return usuarioVO;
+    }
+
+
+
+
 
 }
