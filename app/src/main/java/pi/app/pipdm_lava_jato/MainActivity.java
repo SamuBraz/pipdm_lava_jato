@@ -21,10 +21,10 @@ public class MainActivity extends AppCompatActivity {
         Maindao maindao = new Maindao(this);
 
         UsuarioVO usuarioVO1 = new UsuarioVO();
-        usuarioVO1.setId(212222);
+        usuarioVO1.setId(132131321);
         usuarioVO1.setNome("Bruno");
         usuarioVO1.setSenha("21321321");
-        usuarioVO1.setEmail("bb.silva@gmail.com");
+        usuarioVO1.setEmail("bbb.silva@gmail.com");
         usuarioVO1.setTelefone("321231");
         usuarioVO1.setCpf("1321321");
 
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         horarioVO.setHorarioTermino("18-06-2024-22:20");
 
         maindao.addClient(usuarioVO1);
-        maindao.addHorario(horarioVO);
+        //maindao.addHorario(horarioVO);
 
         Log.d("insert: ", "Registros inseridos no banco de dados...");
 
@@ -56,12 +56,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void  btnOnClickGet(View view){
         Maindao maindao = new Maindao(this);
-        UsuarioVO usuarioVO = maindao.getUsuario(1);
+        UsuarioVO usuarioVO = maindao.getUsuario("bbb.silva@gmail.com");
 
-        String nome = usuarioVO.getNome();
-        int id = usuarioVO.getId();
-        Log.d("TAG", "Valor da variável: " + nome);
-        Log.d("TAG", "Valor da variável: " + id);
+        String email = usuarioVO.getEmail();
+        String senha = usuarioVO.getSenha();
+        Log.d("TAG", "Valor da variável: " + email);
+        Log.d("TAG", "Valor da variável: " + senha);
     }
 
 

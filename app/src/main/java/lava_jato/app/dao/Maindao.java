@@ -23,7 +23,7 @@ import lava_jato.app.model.HorarioVO;
 public class Maindao extends SQLiteOpenHelper {
     private Context context;
     private static final String DB_NAME = "PI-LAVA-JATO";
-    private static final int DB_VERSION = 7;
+    private static final int DB_VERSION = 8;
     private static final String TB_USUARIO = "tb_usuario";
 
     private static final String KEY_ID = "id";
@@ -99,20 +99,19 @@ public class Maindao extends SQLiteOpenHelper {
         db.insert(TB_HORARIO, null, contentValues);
     }
 
-    public UsuarioVO getUsuario(int id){
+    public UsuarioVO getUsuario(String email){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("select * from " + TB_USUARIO, null);
-        Cursor cursor = db.query(TB_USUARIO, new String[] {KEY_ID, NOME},
-                KEY_ID + " = ? ",
-                new String[] {String.valueOf(id)},
+        Cursor cursor = db.query(TB_USUARIO, new String[] {EMAIL, SENHA},
+                EMAIL + " = ? ",
+                new String[] {String.valueOf(email)},
                 null, null, null);
         if (cursor != null){
             cursor.moveToFirst();
         }
 
         UsuarioVO usuarioVO = new UsuarioVO();
-        usuarioVO.setId( Integer.parseInt(cursor.getString(0)));
-        usuarioVO.setNome(cursor.getString(1));
+        usuarioVO.setEmail(cursor.getString(0));
+        usuarioVO.setSenha(cursor.getString(1));
         return usuarioVO;
     }
 
