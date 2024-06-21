@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">pipdm_lava_jato</string>
     <string-array name="tiposlavagens">
+        <item>Selecione um tipo</item>
         <item>Interna</item>
         <item>Externa</item>
     </string-array>
     <string-array name="carros">
+        <item>Selecione um tipo</item>
         <item>Sedan</item>
         <item>SUV</item>
         <item>Hatch</item>

@@ -38,11 +38,16 @@
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spnr_Agendar_Lavagem"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
+        android:background="@drawable/spnr_drawable"
+        android:popupBackground="@color/offwhite"
+        android:dropDownWidth="match_parent"
+        android:dropDownVerticalOffset = "50dp"
         android:entries="@array/tiposlavagens"
+        android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -53,21 +58,24 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
-        android:text="Tamanho do Caroo"
+        android:text="Tamanho do Carro"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/spnr_Agendar_Lavagem" />
 
     <Spinner
-        android:id="@+id/spinner2"
+        android:id="@+id/spnr_Agendar_TamanhoCarro"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
+        android:background="@drawable/spnr_drawable"
+        android:popupBackground="@color/offwhite"
+        android:dropDownWidth="match_parent"
+        android:dropDownVerticalOffset = "50dp"
         android:entries="@array/carros"
-        android:background="@android:drawable/btn_dropdown"
-        app:layout_constraintEnd_toEndOf="@+id/spinner"
-        app:layout_constraintStart_toStartOf="@+id/spinner"
+        app:layout_constraintEnd_toEndOf="@+id/spnr_Agendar_Lavagem"
+        app:layout_constraintStart_toStartOf="@+id/spnr_Agendar_Lavagem"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <TextView
@@ -77,8 +85,8 @@
         android:layout_marginTop="30dp"
         android:text="Dia"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/spinner2"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+        app:layout_constraintStart_toStartOf="@+id/spnr_Agendar_TamanhoCarro"
+        app:layout_constraintTop_toBottomOf="@+id/spnr_Agendar_TamanhoCarro" />
 
     <TextView
         android:id="@+id/textView9"
@@ -87,24 +95,24 @@
         android:layout_marginTop="30dp"
         android:text="Horario"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/spinner2"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+        app:layout_constraintEnd_toEndOf="@+id/spnr_Agendar_TamanhoCarro"
+        app:layout_constraintTop_toBottomOf="@+id/spnr_Agendar_TamanhoCarro" />
 
     <Spinner
-        android:id="@+id/spinner3"
+        android:id="@+id/spnr_Agendar_Dia"
         android:layout_width="120dp"
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
-        android:background="@android:drawable/btn_dropdown"
+        android:background="@drawable/sprn_horario"
         app:layout_constraintStart_toStartOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <Spinner
-        android:id="@+id/spinner4"
+        android:id="@+id/spnr_Agendar_Horaio"
         android:layout_width="120dp"
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
-        android:background="@android:drawable/btn_dropdown"
+        android:background="@drawable/spnr_drawable"
         app:layout_constraintEnd_toEndOf="@+id/textView9"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
@@ -117,15 +125,15 @@
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+        app:layout_constraintTop_toBottomOf="@+id/spnr_Agendar_TamanhoCarro" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:backgroundTint="@color/offwhite"
-        android:text="Button"
+        android:text="Agendar"
         android:textColor="@color/black"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
