@@ -25,7 +25,7 @@ import lava_jato.app.model.HorarioVO;
 public class Maindao extends SQLiteOpenHelper {
     private Context context;
     private static final String DB_NAME = "PI-LAVA-JATO";
-    private static final int DB_VERSION = 8;
+    private static final int DB_VERSION = 9;
     private static final String TB_USUARIO = "tb_usuario";
 
     private static final String KEY_ID = "id";
@@ -95,7 +95,6 @@ public class Maindao extends SQLiteOpenHelper {
 
         contentValues.put(IDHORARIO, horarioVO.getIdHorario());
         contentValues.put(HORARIOINCIO, horarioVO.getHorarioInicio());
-        contentValues.put(HORARIOFINAL, horarioVO.getHorarioTermino());
         contentValues.put(IDCLIENT, horarioVO.getIdClient());
 
         db.insert(TB_HORARIO, null, contentValues);
