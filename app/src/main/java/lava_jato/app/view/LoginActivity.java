@@ -7,11 +7,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import lava_jato.app.viewmodel.UserViewModelFactory;
 import pi.app.pipdm_lava_jato.R;
 
 import lava_jato.app.dao.Maindao;
@@ -32,10 +34,11 @@ public class LoginActivity extends AppCompatActivity {
         senhaEditText = findViewById(R.id.te_Login_Senha);
 
         mainDAO = new Maindao(this);
-        userViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(UserViewModel.class);
+        UserViewModelFactory factory = new UserViewModelFactory(mainDAO);
+        userViewModel = new ViewModelProvider(this, factory).get(UserViewModel.class);
 
-        Button button = findViewById(R.id.btn_Login_Entrar);
-        button.setOnClickListener(new View.OnClickListener(){
+        TextView txtbutton = findViewById(R.id.txtbtnRegister);
+        txtbutton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -56,7 +59,9 @@ public class LoginActivity extends AppCompatActivity {
         userViewModel.getUsuarioLiveData(email).observe(this, usuario -> {
             if (usuario != null && userViewModel.authenticateUser(email, senha)) {
                 Toast.makeText(this, "Login bem-sucedido!", Toast.LENGTH_SHORT).show();
-                setContentView(R.layout.activity_agendamento);
+                Log.d("Login", "Login deu certo");
+                Intent intentAgen = new Intent(LoginActivity.this, AgendamentoActivity.class);
+                startActivity(intentAgen);
             } else {
                 Toast.makeText(this, "Email ou senha incorretos!", Toast.LENGTH_SHORT).show();
             }

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,4 +5,141 @@
     android:layout_height="match_parent"
     tools:context="lava_jato.app.view.AgendamentoActivity">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Agendamento"
+        android:textColor="@color/black"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="60dp"
+        android:text="Tipo de Lavagem"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+    <Spinner
+        android:id="@+id/spnr_Agendar_Lavagem"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/spnr_drawable"
+        android:popupBackground="@color/offwhite"
+        android:dropDownWidth="match_parent"
+        android:dropDownVerticalOffset = "50dp"
+        android:entries="@array/tiposlavagens"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:text="Tamanho do Carro"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spnr_Agendar_Lavagem" />
+
+    <Spinner
+        android:id="@+id/spnr_Agendar_TipoCarro"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/spnr_drawable"
+        android:popupBackground="@color/offwhite"
+        android:dropDownWidth="match_parent"
+        android:dropDownVerticalOffset = "50dp"
+        android:entries="@array/carros"
+        app:layout_constraintEnd_toEndOf="@+id/spnr_Agendar_Lavagem"
+        app:layout_constraintStart_toStartOf="@+id/spnr_Agendar_Lavagem"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Dia"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/spnr_Agendar_TipoCarro"
+        app:layout_constraintTop_toBottomOf="@+id/spnr_Agendar_TipoCarro" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Horario"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/spnr_Agendar_TipoCarro"
+        app:layout_constraintTop_toBottomOf="@+id/spnr_Agendar_TipoCarro" />
+
+    <Button
+        android:id="@+id/spnr_Agendar_Dia"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        app:backgroundTint="@color/offwhite"
+        android:textColor="@color/black"
+        android:text="dd/mm/aa"
+        android:background="@drawable/sprn_horario"
+        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+    <Spinner
+        android:id="@+id/spnr_Agendar_Horaio"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/spnr_drawable"
+        app:layout_constraintEnd_toEndOf="@+id/textView9"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="170dp"
+        android:text="R$00,00"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spnr_Agendar_TipoCarro" />
+
+    <Button
+        android:id="@+id/btn_agendarlav"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/offwhite"
+        android:onClick="reservarHorario"
+        android:text="Agendar"
+        android:textColor="@color/black"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/price" />
 </androidx.constraintlayout.widget.ConstraintLayout>

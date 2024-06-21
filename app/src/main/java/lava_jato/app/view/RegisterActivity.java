@@ -8,19 +8,18 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import pi.app.pipdm_lava_jato.R;
-
+import lava_jato.app.dao.Maindao;
 import lava_jato.app.viewmodel.UserViewModel;
+import lava_jato.app.viewmodel.UserViewModelFactory;
 
 public class RegisterActivity extends AppCompatActivity {
 
-
-    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
     private EditText nomeEditText, senhaEditText, emailEditText, telefoneEditText, cpfEditText;
     private UserViewModel userViewModel;
+    private Maindao mainDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,16 +32,16 @@ public class RegisterActivity extends AppCompatActivity {
         telefoneEditText = findViewById(R.id.te_Cadastro_Telefone);
         cpfEditText = findViewById(R.id.te_Cadastro_CPF);
 
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        mainDAO = new Maindao(this);
+        UserViewModelFactory factory = new UserViewModelFactory(mainDAO);
+        userViewModel = new ViewModelProvider(this, factory).get(UserViewModel.class);
 
         userViewModel.getUsuarioLiveData(emailEditText.getText().toString()).observe(this, usuario -> {
             if (usuario != null) {
-                Toast.makeText(this, "UsuÃ¡rio registrado com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Usuário registrado com sucesso!", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
-
-
     }
 
     public void btn_onRegisterClick(View view) {
@@ -60,8 +59,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         userViewModel.registerUser(nome, email, senha, telefone, cpf);
 
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
-
     }
 }

@@ -5,9 +5,6 @@ public class HorarioVO {
     private int idClient;
     private String horarioInicio;
 
-
-
-
     public HorarioVO(){}
 
     public HorarioVO(int idHorario){

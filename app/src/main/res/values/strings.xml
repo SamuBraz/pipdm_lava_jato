@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">pipdm_lava_jato</string>
+    <string-array name="tiposlavagens">
+        <item>Selecione um tipo</item>
+        <item>Interna</item>
+        <item>Externa</item>
+    </string-array>
+    <string-array name="carros">
+        <item>Selecione um tipo</item>
+        <item>Sedan</item>
+        <item>SUV</item>
+        <item>Hatch</item>
+    </string-array>
+    <string-array name="horario">
+        <item>10:00</item>
+        <item>11:00</item>
+        <item>12:00</item>
+        <item>13:00</item>
+        <item>14:00</item>
+        <item>15:00</item>
+        <item>16:00</item>
+        <item>17:00</item>
+        <item>18:00</item>
+    </string-array>
 </resources>

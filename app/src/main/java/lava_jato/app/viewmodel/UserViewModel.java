@@ -12,6 +12,7 @@ public class UserViewModel extends ViewModel {
     private Maindao maindao;
 
     public UserViewModel(Maindao maindao) {
+        super();
         this.maindao = maindao;
     }
 

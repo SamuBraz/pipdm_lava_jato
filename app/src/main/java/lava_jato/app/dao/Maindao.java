@@ -5,58 +5,43 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
-
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-
 import java.util.ArrayList;
 
-import lava_jato.app.model.UsuarioVO;
 import lava_jato.app.model.HorarioVO;
+import lava_jato.app.model.UsuarioVO;
+
 public class Maindao extends SQLiteOpenHelper {
-    private Context context;
     private static final String DB_NAME = "PI-LAVA-JATO";
     private static final int DB_VERSION = 9;
     private static final String TB_USUARIO = "tb_usuario";
-
     private static final String KEY_ID = "id";
     private static final String NOME = "nome";
     private static final String SENHA = "senha";
     private static final String TELEFONE = "telefone";
     private static final String CPF = "cpf";
     private static final String EMAIL = "email";
-
     private static final String TB_HORARIO = "tb_horario";
-
     private static final String IDHORARIO = "id_horario";
     private static final String IDCLIENT = "id_client";
-    private static final String HORARIOINCIO  = "horario_inicio";
+    private static final String HORARIOINCIO = "horario_inicio";
 
     private static final String CREATE_TB_USUARIO = "CREATE TABLE " + TB_USUARIO + " ("
-            +KEY_ID + " INTEGER PRIMARY KEY, "
-            +NOME + " TEXT, "
-            +SENHA + " TEXT, "
-            +TELEFONE+ " TEXT, "
-            +CPF+ " TEXT, "
-            +EMAIL+ " TEXT )";
+            + KEY_ID + " INTEGER PRIMARY KEY, "
+            + NOME + " TEXT, "
+            + SENHA + " TEXT, "
+            + TELEFONE + " TEXT, "
+            + CPF + " TEXT, "
+            + EMAIL + " TEXT )";
 
     private static final String CREATE_TB_HORARIO = "CREATE TABLE " + TB_HORARIO + " ("
-            +IDHORARIO + " INTEGER PRIMARY KEY, "
-            +IDCLIENT + " INTEGER, "
-            +HORARIOINCIO + " TEXT )";
-
-
+            + IDHORARIO + " INTEGER PRIMARY KEY, "
+            + IDCLIENT + " INTEGER, "
+            + HORARIOINCIO + " TEXT )";
 
     public Maindao(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -68,7 +53,6 @@ public class Maindao extends SQLiteOpenHelper {
         db.execSQL(CREATE_TB_USUARIO);
     }
 
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TB_USUARIO);
@@ -76,7 +60,7 @@ public class Maindao extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addClient(UsuarioVO usuarioVO){
+    public void addClient(UsuarioVO usuarioVO) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -89,7 +73,23 @@ public class Maindao extends SQLiteOpenHelper {
         db.insert(TB_USUARIO, null, contentValues);
     }
 
-    public void addHorario(HorarioVO horarioVO){
+    public boolean isHorarioReservado(String horarioInicio) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TB_HORARIO, new String[]{IDHORARIO},
+                HORARIOINCIO + "=?", new String[]{horarioInicio}, null, null, null);
+
+        boolean reservado = cursor != null && cursor.moveToFirst();
+        if (cursor != null) {
+            cursor.close();
+        }
+        return reservado;
+    }
+
+    public void addHorario(HorarioVO horarioVO) {
+        if (isHorarioReservado(horarioVO.getHorarioInicio())) {
+            throw new IllegalArgumentException("Horário já reservado!");
+        }
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -102,7 +102,7 @@ public class Maindao extends SQLiteOpenHelper {
 
     public UsuarioVO getUsuario(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TB_USUARIO, new String[] {NOME, SENHA, TELEFONE, CPF, EMAIL},
+        Cursor cursor = db.query(TB_USUARIO, new String[]{NOME, SENHA, TELEFONE, CPF, EMAIL},
                 EMAIL + "=?", new String[]{email}, null, null, null);
 
         if (cursor != null && cursor.moveToFirst()) {
@@ -133,18 +133,15 @@ public class Maindao extends SQLiteOpenHelper {
         return false;
     }
 
-
-    public void getHorario(){
+    public void getHorario() {
         String query = "SELECT * FROM " + TB_HORARIO;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        if( db != null){
-            cursor = db.rawQuery(query, null);
-        }
+        Cursor cursor = db.rawQuery(query, null);
+
         ArrayList<String> hora_array = new ArrayList<>();
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             hora_array.add(cursor.getString(2));
         }
+        cursor.close();
     }
-
 }

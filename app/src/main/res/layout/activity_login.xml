@@ -73,6 +73,7 @@
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/black"
                 android:gravity="center"
+                android:onClick="btn_onLoginClick"
                 android:text="Entrar"
                 android:textColor="@color/white"
                 android:textSize="14sp"
@@ -102,7 +103,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:clickable="true"
-                    android:onClick="redirectToRegister"
                     android:text="Cadastrar"
                     android:textColor="#03A9F4" />
 
