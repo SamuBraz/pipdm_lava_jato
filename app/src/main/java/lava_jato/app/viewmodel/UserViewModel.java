@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel;
 import lava_jato.app.dao.Maindao;
 import lava_jato.app.model.UsuarioVO;
 
-public class UserViewModel {
+public class UserViewModel extends ViewModel {
+
+
     private Maindao maindao;
 
     public UserViewModel(Maindao maindao) {

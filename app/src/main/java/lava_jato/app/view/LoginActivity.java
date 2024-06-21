@@ -3,7 +3,9 @@ package lava_jato.app.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -31,6 +33,15 @@ public class LoginActivity extends AppCompatActivity {
 
         mainDAO = new Maindao(this);
         userViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(UserViewModel.class);
+
+        Button button = findViewById(R.id.btn_Login_Entrar);
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void btn_onLoginClick(View view) {
@@ -51,9 +62,6 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         });
-        public void btn_redirectToRegister(View view) {
-            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-            startActivity(intent);
-        }
+
     }
 }

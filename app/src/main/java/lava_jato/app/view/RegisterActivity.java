@@ -17,6 +17,8 @@ import lava_jato.app.viewmodel.UserViewModel;
 
 public class RegisterActivity extends AppCompatActivity {
 
+
+    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
     private EditText nomeEditText, senhaEditText, emailEditText, telefoneEditText, cpfEditText;
     private UserViewModel userViewModel;
 
@@ -39,6 +41,8 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
     }
 
     public void btn_onRegisterClick(View view) {
@@ -56,9 +60,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         userViewModel.registerUser(nome, email, senha, telefone, cpf);
 
-        public void redirectToLogin(View view){
-            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-            startActivity(intent);
-        }
+        startActivity(intent);
+        finish();
+
     }
 }
