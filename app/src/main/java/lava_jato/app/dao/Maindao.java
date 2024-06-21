@@ -40,7 +40,6 @@ public class Maindao extends SQLiteOpenHelper {
     private static final String IDHORARIO = "id_horario";
     private static final String IDCLIENT = "id_client";
     private static final String HORARIOINCIO  = "horario_inicio";
-    private static final String HORARIOFINAL = "horario_final";
 
     private static final String CREATE_TB_USUARIO = "CREATE TABLE " + TB_USUARIO + " ("
             +KEY_ID + " INTEGER PRIMARY KEY, "
@@ -53,8 +52,7 @@ public class Maindao extends SQLiteOpenHelper {
     private static final String CREATE_TB_HORARIO = "CREATE TABLE " + TB_HORARIO + " ("
             +IDHORARIO + " INTEGER PRIMARY KEY, "
             +IDCLIENT + " INTEGER, "
-            +HORARIOINCIO + " TEXT, "
-            +HORARIOFINAL+ " TEXT )";
+            +HORARIOINCIO + " TEXT )";
 
 
 

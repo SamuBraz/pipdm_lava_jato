@@ -5,7 +5,7 @@ public class HorarioVO {
     private int idClient;
     private String horarioInicio;
 
-    private String horarioTermino;
+
 
 
     public HorarioVO(){}
@@ -17,7 +17,6 @@ public class HorarioVO {
     public HorarioVO(int idHorario, int idClient, String horarioInicio, String horarioTermino){
         this.idHorario = idHorario;
         this.idClient= idClient;
-        this.horarioTermino = horarioTermino;
         this.horarioInicio = horarioInicio;
     }
     public int getIdHorario(){
@@ -45,11 +44,4 @@ public class HorarioVO {
         return horarioInicio;
     }
 
-    public void setHorarioTermino(String horarioTermino){
-        this.horarioTermino = horarioTermino;
-    }
-
-    public  String getHorarioTermino(){
-        return this.horarioTermino;
-    }
 }

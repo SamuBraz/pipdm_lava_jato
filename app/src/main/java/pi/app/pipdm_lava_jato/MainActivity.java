@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         horarioVO.setIdHorario(6);
         horarioVO.setIdClient(2);
         horarioVO.setHorarioInicio("18-06-2024-22:00");
-        horarioVO.setHorarioTermino("18-06-2024-22:20");
 
         maindao.addClient(usuarioVO1);
         //maindao.addHorario(horarioVO);
@@ -48,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         horarioVO.setIdHorario(1);
         horarioVO.setIdClient(1);
         horarioVO.setHorarioInicio("18-06-2024-22:00");
-        horarioVO.setHorarioTermino("18-06-2024-22:20");
 
         maindao.addHorario(horarioVO);
 
