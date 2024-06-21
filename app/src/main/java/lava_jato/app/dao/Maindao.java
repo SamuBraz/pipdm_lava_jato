@@ -121,16 +121,9 @@ public class Maindao extends SQLiteOpenHelper {
         if( db != null){
             cursor = db.rawQuery(query, null);
         }
+        ArrayList<String> hora_array = new ArrayList<>();
         while (cursor.moveToNext()){
-            int idHorario = cursor.getInt(0);
-            Log.d("TAG", "Valor do horario: " + idHorario);
-            String horario_inicio = cursor.getString(1);
-            Log.d("TAG", "Valor do horario: " + horario_inicio);
-            String horario_final = cursor.getString(2);
-            Log.d("TAG", "Valor do horario: " + horario_final);
-            int iduser  = cursor.getInt(3);
-            Log.d("TAG", "Valor do horario: " + iduser);
-
+            hora_array.add(cursor.getString(2));
         }
 
     }

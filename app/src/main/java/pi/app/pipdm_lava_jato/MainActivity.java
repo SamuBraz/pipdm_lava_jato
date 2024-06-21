@@ -44,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
     public void btnOnClickCadastrarHora(View view){
         Maindao maindao = new Maindao(this);
         HorarioVO horarioVO = new HorarioVO();
-        horarioVO.setIdHorario(1);
-        horarioVO.setIdClient(1);
-        horarioVO.setHorarioInicio("18-06-2024-22:00");
+        horarioVO.setIdHorario(4);
+        horarioVO.setIdClient(4);
+        horarioVO.setHorarioInicio("19/06/2024-12:00");
 
         maindao.addHorario(horarioVO);
 
