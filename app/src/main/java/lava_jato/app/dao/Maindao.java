@@ -125,14 +125,6 @@ public class Maindao extends SQLiteOpenHelper {
         return liveData;
     }
 
-    public boolean isValidPassword(String email, String inputPassword) {
-        UsuarioVO usuario = getUsuario(email);
-        if (usuario != null) {
-            return org.mindrot.jbcrypt.BCrypt.checkpw(inputPassword, usuario.getSenha());
-        }
-        return false;
-    }
-
 
     public void getHorario(){
         String query = "SELECT * FROM " + TB_HORARIO;

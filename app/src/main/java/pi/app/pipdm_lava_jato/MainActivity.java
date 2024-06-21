@@ -22,9 +22,9 @@ public class MainActivity extends AppCompatActivity {
 
         UsuarioVO usuarioVO1 = new UsuarioVO();
         usuarioVO1.setId(132131321);
-        usuarioVO1.setNome("Bruno");
+        usuarioVO1.setNome("Samuel");
         usuarioVO1.setSenha("21321321");
-        usuarioVO1.setEmail("bbb.silva@gmail.com");
+        usuarioVO1.setEmail("samuel.dias.silva@gmail.com");
         usuarioVO1.setTelefone("321231");
         usuarioVO1.setCpf("1321321");
 
