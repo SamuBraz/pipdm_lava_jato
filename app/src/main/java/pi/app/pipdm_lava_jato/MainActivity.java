@@ -63,9 +63,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void testeHorario(View view){
-        Maindao maindao = new Maindao(this);
-        maindao.getHorario();
+        //Maindao maindao = new Maindao(this);
+        //maindao.getHorario();
+        String data = "21/06/2024";
+        String hora = "01:03";
+
+        String data_hota = data + "-" + hora;
+        Log.d("TAG", "Valor do horario: " + data_hota);
     }
+
+
 
 
 }

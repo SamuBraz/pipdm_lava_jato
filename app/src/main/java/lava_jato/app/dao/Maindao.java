@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 
 import java.util.ArrayList;
@@ -98,21 +100,39 @@ public class Maindao extends SQLiteOpenHelper {
         db.insert(TB_HORARIO, null, contentValues);
     }
 
-    public UsuarioVO getUsuario(String email){
+    public UsuarioVO getUsuario(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TB_USUARIO, new String[] {EMAIL, SENHA},
-                EMAIL + " = ? ",
-                new String[] {String.valueOf(email)},
-                null, null, null);
-        if (cursor != null){
-            cursor.moveToFirst();
-        }
+        Cursor cursor = db.query(TB_USUARIO, new String[] {NOME, SENHA, TELEFONE, CPF, EMAIL},
+                EMAIL + "=?", new String[]{email}, null, null, null);
 
-        UsuarioVO usuarioVO = new UsuarioVO();
-        usuarioVO.setEmail(cursor.getString(0));
-        usuarioVO.setSenha(cursor.getString(1));
-        return usuarioVO;
+        if (cursor != null && cursor.moveToFirst()) {
+            UsuarioVO usuario = new UsuarioVO();
+            usuario.setNome(cursor.getString(0));
+            usuario.setSenha(cursor.getString(1));
+            usuario.setTelefone(cursor.getString(2));
+            usuario.setCpf(cursor.getString(3));
+            usuario.setEmail(cursor.getString(4));
+            cursor.close();
+            return usuario;
+        }
+        return null;
     }
+
+    public LiveData<UsuarioVO> getUsuarioLiveData(String email) {
+        MutableLiveData<UsuarioVO> liveData = new MutableLiveData<>();
+        UsuarioVO usuario = getUsuario(email);
+        liveData.setValue(usuario);
+        return liveData;
+    }
+
+    public boolean isValidPassword(String email, String inputPassword) {
+        UsuarioVO usuario = getUsuario(email);
+        if (usuario != null) {
+            return org.mindrot.jbcrypt.BCrypt.checkpw(inputPassword, usuario.getSenha());
+        }
+        return false;
+    }
+
 
     public void getHorario(){
         String query = "SELECT * FROM " + TB_HORARIO;
@@ -125,7 +145,6 @@ public class Maindao extends SQLiteOpenHelper {
         while (cursor.moveToNext()){
             hora_array.add(cursor.getString(2));
         }
-
     }
 
 }
