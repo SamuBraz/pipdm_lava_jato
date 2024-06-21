@@ -1,7 +1,6 @@
 package lava_jato.app.view;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +11,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -19,63 +19,59 @@ import pi.app.pipdm_lava_jato.R;
 
 public class AgendarActivity extends AppCompatActivity {
 
+    // Constantes de preço
+    private static final int PRICE_INTERNA = 50;
+    private static final int PRICE_EXTERNA = 20;
+
+    // Views
     private TextView price;
     private Button btnData;
+    private Spinner spinnerLavagem, spinnerCarro, spinnerHorario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agendar);
 
+        initializeViews();
+        setupSpinners();
+        setupDatePicker();
+    }
+
+    private void initializeViews() {
         price = findViewById(R.id.price);
+        btnData = findViewById(R.id.spnr_Agendar_Dia);
+        spinnerLavagem = findViewById(R.id.spnr_Agendar_Lavagem);
+        spinnerCarro = findViewById(R.id.spnr_Agendar_TipoCarro);
+        spinnerHorario = findViewById(R.id.spnr_Agendar_Horaio);
+    }
 
-        Spinner CompleteTextViewLavagem = findViewById(R.id.spnr_Agendar_Lavagem);
-        Spinner CompleteTextViewCarro = findViewById(R.id.spnr_Agendar_TipoCarro);
-        Spinner CompleteTextViewHorario = findViewById(R.id.spnr_Agendar_Horaio);
+    private void setupSpinners() {
+        setupSpinner(spinnerLavagem, R.array.tiposlavagens);
+        setupSpinner(spinnerCarro, R.array.carros);
+        setupSpinner(spinnerHorario, R.array.horario);
 
-        ArrayAdapter<CharSequence> adapterItemsLavagem = ArrayAdapter.createFromResource(this, R.array.tiposlavagens, R.layout.spinner_item);
-        ArrayAdapter<CharSequence> adapterItemCarro = ArrayAdapter.createFromResource(this, R.array.carros, R.layout.spinner_item);
-        ArrayAdapter<CharSequence> adapterItemHorario = ArrayAdapter.createFromResource(this, R.array.horario, R.layout.spinner_item);
-
-        adapterItemsLavagem.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterItemCarro.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterItemHorario.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        CompleteTextViewLavagem.setAdapter(adapterItemsLavagem);
-        CompleteTextViewCarro.setAdapter(adapterItemCarro);
-        CompleteTextViewHorario.setAdapter(adapterItemHorario);
-
-        CompleteTextViewLavagem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerLavagem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String lavagem = parent.getItemAtPosition(position).toString();
-                String carro = CompleteTextViewCarro.getSelectedItem() != null ? CompleteTextViewCarro.getSelectedItem().toString() : "";
-                Log.d("AgendarActivity", "Tipo de lavagem selecionada: " + lavagem);
-                updatePrice(lavagem, carro);
+                handleSpinnerSelection();
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Do nothing
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        CompleteTextViewCarro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerCarro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String carro = parent.getItemAtPosition(position).toString();
-                String lavagem = CompleteTextViewLavagem.getSelectedItem() != null ? CompleteTextViewLavagem.getSelectedItem().toString() : "";
-                Log.d("AgendarActivity", "Tipo de carro selecionado: " + carro);
-                updatePrice(lavagem, carro);
+                handleSpinnerSelection();
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Do nothing
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        CompleteTextViewHorario.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerHorario.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String horario = parent.getItemAtPosition(position).toString();
@@ -83,22 +79,26 @@ public class AgendarActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Do nothing
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
+    }
 
-        btnData = findViewById(R.id.spnr_Agendar_Dia);
+    private void setupSpinner(Spinner spinner, int arrayResId) {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, arrayResId, R.layout.spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+    }
 
+    private void setupDatePicker() {
         btnData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openDataDialog();
+                openDatePickerDialog();
             }
         });
     }
 
-    private void openDataDialog() {
+    private void openDatePickerDialog() {
         Calendar cal = Calendar.getInstance();
         int yearInstance = cal.get(Calendar.YEAR);
         int monthInstance = cal.get(Calendar.MONTH);
@@ -107,51 +107,55 @@ public class AgendarActivity extends AppCompatActivity {
         DatePickerDialog dialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                btnData.setText(String.valueOf(dayOfMonth) + "/" + String.valueOf(month + 1) + "/" + String.valueOf(year));
+                Calendar selectedDate = Calendar.getInstance();
+                selectedDate.set(year, month, dayOfMonth);
+
+                if (selectedDate.before(Calendar.getInstance())) {
+                    Toast.makeText(AgendarActivity.this, "Selecione uma data futura", Toast.LENGTH_SHORT).show();
+                } else {
+                    String dia = String.format("%d/%d/%d", dayOfMonth, month + 1, year);
+                    Log.d("AgendarActivity", "Dia: " + dia);
+                    btnData.setText(dia);
+                }
             }
         }, yearInstance, monthInstance, dayInstance);
 
+        dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         dialog.show();
     }
 
+    private void handleSpinnerSelection() {
+        String lavagem = spinnerLavagem.getSelectedItem() != null ? spinnerLavagem.getSelectedItem().toString() : "";
+        String carro = spinnerCarro.getSelectedItem() != null ? spinnerCarro.getSelectedItem().toString() : "";
+
+        Log.d("AgendarActivity", "Tipo de lavagem selecionada: " + lavagem);
+        Log.d("AgendarActivity", "Tipo de carro selecionado: " + carro);
+
+        updatePrice(lavagem, carro);
+    }
+
     private void updatePrice(String lavagem, String carro) {
-        int priceValueInterna = 50;
-        int priceValueExterna = 20;
         int finalPrice = 0;
 
         if ("Interna".equals(lavagem)) {
-            switch (carro) {
-                case "Sedan":
-                    finalPrice = priceValueInterna;
-                    break;
-                case "SUV":
-                    finalPrice = (int) (priceValueInterna * 1.5);
-                    break;
-                case "Hatch":
-                    finalPrice = priceValueInterna * 2;
-                    break;
-                default:
-                    finalPrice = 0;
-                    break;
-            }
+            finalPrice = getPriceForCarType(carro, PRICE_INTERNA);
         } else if ("Externa".equals(lavagem)) {
-            switch (carro) {
-                case "Sedan":
-                    finalPrice = priceValueExterna;
-                    break;
-                case "SUV":
-                    finalPrice = (int) (priceValueExterna * 1.5);
-                    break;
-                case "Hatch":
-                    finalPrice = priceValueExterna * 2;
-                    break;
-                default:
-                    finalPrice = 0;
-                    break;
-            }
+            finalPrice = getPriceForCarType(carro, PRICE_EXTERNA);
         }
 
-        String priceText = "R$ " + finalPrice + ",00";
-        price.setText(priceText);
+        price.setText(String.format("R$ %d,00", finalPrice));
+    }
+
+    private int getPriceForCarType(String carro, int basePrice) {
+        switch (carro) {
+            case "Sedan":
+                return basePrice;
+            case "SUV":
+                return (int) (basePrice * 1.5);
+            case "Hatch":
+                return basePrice * 2;
+            default:
+                return 0;
+        }
     }
 }
