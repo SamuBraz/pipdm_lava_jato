@@ -64,5 +64,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d("TAG", "Valor da variável: " + senha);
     }
 
+    public void testeHorario(View view){
+        Maindao maindao = new Maindao(this);
+        maindao.getHorario();
+    }
+
 
 }

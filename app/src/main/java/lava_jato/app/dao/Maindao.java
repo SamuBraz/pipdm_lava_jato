@@ -18,6 +18,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 
+import java.util.ArrayList;
+
 import lava_jato.app.model.UsuarioVO;
 import lava_jato.app.model.HorarioVO;
 public class Maindao extends SQLiteOpenHelper {
@@ -115,8 +117,25 @@ public class Maindao extends SQLiteOpenHelper {
         return usuarioVO;
     }
 
+    public void getHorario(){
+        String query = "SELECT * FROM " + TB_HORARIO;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if( db != null){
+            cursor = db.rawQuery(query, null);
+        }
+        while (cursor.moveToNext()){
+            int idHorario = cursor.getInt(0);
+            Log.d("TAG", "Valor do horario: " + idHorario);
+            String horario_inicio = cursor.getString(1);
+            Log.d("TAG", "Valor do horario: " + horario_inicio);
+            String horario_final = cursor.getString(2);
+            Log.d("TAG", "Valor do horario: " + horario_final);
+            int iduser  = cursor.getInt(3);
+            Log.d("TAG", "Valor do horario: " + iduser);
 
+        }
 
-
+    }
 
 }
