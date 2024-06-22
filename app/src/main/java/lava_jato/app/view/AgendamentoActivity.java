@@ -146,8 +146,7 @@ public class AgendamentoActivity extends AppCompatActivity {
             maindao.addHorario(horarioVO);
             Toast.makeText(this, "Horário reservado com sucesso!", Toast.LENGTH_SHORT).show();
             // Voltar para a tela de login após a reserva
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            setContentView(R.layout.agendamento_concluido_view);
         } catch (IllegalArgumentException e) {
             Toast.makeText(this, "Horário já reservado. Por favor, escolha outro horário.", Toast.LENGTH_SHORT).show();
         }
